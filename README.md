@@ -15,7 +15,7 @@ This projects gives an example of automating configuring all required mpls backb
 - NCS4200
 - TDM2IP
 
-**The project has been developed with the combination of **
+**The project has been developed with the combination of**
 
 - ANSIBLE 
 - shell script 
@@ -75,7 +75,7 @@ This projects gives an example of automating configuring all required mpls backb
 
 ## Installation
 
-(**Optional: Follow the steps from any of the link based on your OS to prepare your development enviroment.
+(**Optional: Follow the steps from any of the link based on your OS to prepare your development enviroment.**
 
     - https://developer.cisco.com/learning/lab/containers-dev-win/step/1
     - https://developer.cisco.com/learning/lab/containers-dev-mac/step/1
