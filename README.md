@@ -6,7 +6,7 @@
 
 ## Motivation
 
-This projects gives an example of automating configuring all required mpls backbone settings for cisco NCS4200 platform, to put it upto a point where it is ready provisioning MPLS/FLEX-LSP tunnels and CEM services. 
+This projects gives an example of automating configuration of all required mpls backbone settings for cisco NCS4200 platform, to put it upto a point where it is ready for provisioning MPLS/FLEX-LSP tunnels and CEM services. 
 
 ## Technologies & Frameworks Used
 
