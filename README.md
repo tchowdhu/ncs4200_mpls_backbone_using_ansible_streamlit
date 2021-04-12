@@ -105,7 +105,7 @@ This project has been tested on mac and ubuntu)
 4. run "source .env"
 5. run "streamlit run ncs4200_mpls_backbone_using_ansible_streamlit.py"
 6. Open browser and goto "http://localhost:8501". in a remote server enviroment this can changed based on ip address and port number. 
-    http://<server-ip-address>:<port>
+    http://server-ip-address:port
 
 #### Configuration steps (continous):
 
