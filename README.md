@@ -21,7 +21,7 @@ This projects gives an example of automating configuring all required mpls backb
 - shell script 
 - python script.
 
-##### The ANSIBLE portion provides all the required playbooks for configuration task. These include playbooks for:
+#### The ANSIBLE portion provides all the required playbooks for configuration task. These include playbooks for:
 
 1. discovery protocol: CDP/ LLDP
 2. IP Address: Interface and Loopback
@@ -31,12 +31,12 @@ This projects gives an example of automating configuring all required mpls backb
 6. RSVP
 7. Network-clock synchronization: SyncE/ PTP
 
-##### The shell script provides:
+#### The shell script provides:
 
 1. Starting point for playing the playbooks.
 2. Additional ansible variable required while playing playbooks.
 
-##### The python script provides:
+#### The python script provides:
 
 1. The main starting point for the project. 
 2. Streamlit framwork for running the project through webGUI
@@ -92,7 +92,7 @@ This project has been tested on mac and ubuntu)
 
 ## Usage
 
-##### One time steps:
+#### One time steps:
 
 1. Go to the project directory.
 2. Open terminal.
@@ -107,7 +107,7 @@ This project has been tested on mac and ubuntu)
 6. Open browser and goto "http://localhost:8501". in a remote server enviroment this can changed based on ip address and port number. 
     http://<server-ip-address>:<port>
 
-##### Configuration steps (continous):
+#### Configuration steps (continous):
 
 7. Select Config variation from 4 different environment options
 8. Upload appropriate data excel file.
