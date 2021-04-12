@@ -1,0 +1,7 @@
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+interface {{ intfs.interface_name }} {{ intfs.interface_port}}
+    no shutdown
+    ip address {{ intfs.ip_address }} {{ intfs.mask }}
+ {% endfor %}
+ {% endfor %}

@@ -1,0 +1,9 @@
+cdp run
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+{% if intfs.interface_type=="ethernetCsmacd" %}
+interface {{ intfs.interface_name }} {{ intfs.interface_port }}
+cdp enable
+{% endif %}
+{% endfor %}
+{% endfor %}

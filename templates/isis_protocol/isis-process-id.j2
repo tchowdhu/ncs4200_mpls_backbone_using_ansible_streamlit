@@ -1,0 +1,25 @@
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+key chain {{ isis_key_name }}
+ 	key {{ isis_key_id }}
+  		key-string {{ isis_key_encription_level }} {{ isis_key_string }}
+router isis
+ 	metric-style narrow
+router isis {{ isis_node_settings[inventory_hostname].isis_area_tag }}
+	net {{ isis_node_settings[inventory_hostname].net_id }}
+	is-type {{ isis_node_settings[inventory_hostname].isis_level }}
+	metric-style wide
+	fast-flood 15
+	set-overload-bit on-startup 300
+	max-lsp-lifetime 65535
+	lsp-refresh-interval 65000
+	spf-interval 5 50 200
+	prc-interval 5 50 200
+	lsp-gen-interval 5 50 200
+	log-adjacency-changes
+	nsf cisco
+{% for intfs in vals %}
+{% if intfs.interface_type=="softwareLoopback" %}
+	passive-interface {{intfs.interface_name}}{{intfs.interface_port}}
+{% endif %}
+{% endfor %}
+{% endfor %}

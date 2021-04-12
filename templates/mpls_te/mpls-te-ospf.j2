@@ -1,0 +1,20 @@
+mpls traffic-eng nsr
+mpls traffic-eng tunnels
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+router ospf {{ ospf[inventory_hostname].ospf_id }}
+	mpls traffic-eng area {{ ospf[inventory_hostname].ospf_area }}
+{% for intfs in vals %}
+{% if intfs.interface_type=="softwareLoopback" %}
+	mpls traffic-eng router-id {{ intfs.interface_name }}{{intfs.interface_port}}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+{% if intfs.interface_type=="ethernetCsmacd" %}
+interface {{intfs.interface_name }} {{ intfs.interface_port }}
+	mpls traffic-eng tunnels
+{% endif %}
+{% endfor %}
+{% endfor %}

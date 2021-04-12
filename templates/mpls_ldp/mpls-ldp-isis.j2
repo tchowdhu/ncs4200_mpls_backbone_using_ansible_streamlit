@@ -1,0 +1,15 @@
+mpls ldp discovery targeted-hello accept
+mpls ldp graceful-restart
+mpls ldp nsr
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+{% if intfs.interface_type=="softwareLoopback" %}
+mpls ldp router-id {{ intfs.interface_name }}{{ intfs.interface_port }} force
+{% endif %}
+{% endfor %}
+{% endfor %}
+router isis
+	mpls ldp sync
+router isis {{ isis_node_settings[inventory_hostname].isis_area_tag }}
+	mpls ldp autoconfig {{ isis_node_settings[inventory_hostname].isis_level_mpls_te }}
+	mpls ldp sync

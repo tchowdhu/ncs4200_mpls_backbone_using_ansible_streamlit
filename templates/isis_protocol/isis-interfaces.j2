@@ -1,0 +1,15 @@
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+interface {{ intfs.interface_name }} {{ intfs.interface_port }}
+{% if intfs.interface_type=="ethernetCsmacd" %}
+  ip router isis {{ isis_node_settings[inventory_hostname].isis_area_tag }}
+  isis circuit-type {{ isis_node_settings[inventory_hostname].isis_level }}
+  isis network point-to-point
+  isis authentication mode {{ isis_auth_mode }}
+  isis authentication key-chain {{ isis_key_name }}
+{% endif %}
+{% if intfs.interface_type=="softwareLoopback" %}
+  isis circuit-type {{ isis_node_settings[inventory_hostname].isis_level }}
+{% endif %}
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,34 @@
+esmc process
+network-clock hold-off {{ hold_off_time_msec }} global
+network-clock synchronization automatic
+network-clock synchronization ssm option 2 GEN2
+network-clock synchronization mode QL-enabled
+network-clock wait-to-restore {{ wait_to_restore_time_sec }} global
+network-clock log ql-changes
+ptp clock ordinary domain {{ ptp_domain_num }}
+  priority1 {{ ptp_role[inventory_hostname].priority1 }}
+  priority2 {{ ptp_role[inventory_hostname].priority2 }}
+{% if ptp_role[inventory_hostname].role=="master" %}
+  servo tracking-type Frequency
+{% endif %}
+  clock-port {{ ptp_role[inventory_hostname].ptp_clock_port_name }} {{ ptp_role[inventory_hostname].role }} profile {{ ptp_profile }}
+  transport ipv4 unicast interface {{ ptp_transport_interface.name }}{{ ptp_transport_interface.port_number }} negotiation
+{% if ptp_role[inventory_hostname].role=="slave" %}
+  clock source {{ ptp_role[inventory_hostname].ptp_source_clock_ip }}
+{% endif %}
+{% for keys, clock_sources in input_sources[inventory_hostname].items() %}
+{% for srcs in clock_sources %}
+{% if srcs.source_type=="External" %}
+network-clock input-source {{ srcs.priority }} {{ srcs.source_type }} {{ srcs.source_name }} t1 esf linecode b8zs line-build-out 0-133ft
+{% endif %}
+{% if (srcs.source_type=="Interface") and (srcs.priority>0) %}
+network-clock input-source {{ srcs.priority }} interface {{ srcs.source_name }} {{ srcs.source_port }}
+{% endif %}
+{% if (srcs.source_type=="ptp") and (ptp_role[inventory_hostname].role=="slave") %}
+network-clock input-source {{ srcs.priority }} {{ srcs.source_type }} domain {{ srcs.domain }}
+{% endif %}
+{% if srcs.source_type=="TOD-CLOCK" %}
+tod-clock input-source {{ srcs.priority }} {{ srcs.source_name }}
+{% endif %}
+{% endfor %}
+{% endfor %}

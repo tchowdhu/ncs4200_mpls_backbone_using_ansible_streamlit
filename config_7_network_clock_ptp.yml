@@ -1,0 +1,19 @@
+---
+    - name: NCS4200 MPLS BACKBONE CREATION
+      gather_facts: false
+      hosts: ncs4200
+      connection: network_cli
+      vars_files: 
+          - host_vars/interfaces.yml
+          - host_vars/network-clock-ptp-source.yml
+          - host_vars/ptp-role.yml
+  
+      tasks:
+        - name: Creating network-clock-ptp.txt with respected resources
+          template:
+            src: network_clock/network-clock-ptp.j2
+            dest: config_generated_from_template/network-clock-ptp-{{ inventory_hostname }}.txt
+    
+        - name: CONFIGURE NETWORK CLOCK WITH PTP MASTER/SLAVE
+          ios_config:
+            src:  templates/network_clock/network-clock-ptp.j2

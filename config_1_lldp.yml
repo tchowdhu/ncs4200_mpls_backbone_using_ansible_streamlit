@@ -1,0 +1,15 @@
+---
+    - name: NCS4200 MPLS BACKBONE CREATION
+      gather_facts: false
+      hosts: ncs4200
+      connection: network_cli
+  
+      tasks:
+        - name: Creating lldp.txt with respected resources
+          template:
+            src: discovery_protocol/lldp.txt
+            dest: config_generated_from_template/lldp-{{ inventory_hostname }}.txt
+
+        - name: CONFIG LLDP
+          ios_config:
+            src: templates/discovery_protocol/lldp.txt

@@ -1,0 +1,27 @@
+---
+  - name: NCS4200 MPLS BACKBONE CREATION
+    gather_facts: false
+    hosts: ncs4200
+    connection: network_cli
+    vars_files: 
+      - host_vars/interfaces.yml
+      - host_vars/isis.yml
+
+    tasks:
+      - name: Creating isis-process-id.txt with respected resources
+        template:
+          src: isis_protocol/isis-process-id.j2
+          dest: config_generated_from_template/isis-process-id-{{ inventory_hostname }}.txt
+
+      - name: CONFIGURE ISIS process id
+        ios_config:
+          src: templates/isis_protocol/isis-process-id.j2
+
+      - name: Creating isis-interfaces.txt with respected resources
+        template:
+          src: isis_protocol/isis-interfaces.j2
+          dest: config_generated_from_template/isis-interfaces-{{ inventory_hostname }}.txt
+
+      - name: CONFIGURE ISIS INTERFACES
+        ios_config:
+          src: templates/isis_protocol/isis-interfaces.j2

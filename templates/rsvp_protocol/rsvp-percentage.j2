@@ -1,0 +1,8 @@
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+{% if intfs.interface_type=="ethernetCsmacd" %}
+interface {{ intfs.interface_name }} {{ intfs.interface_port }}
+	ip rsvp bandwidth percent {{ intfs.rsvp_bandwidth_percent }}
+{% endif %}
+{% endfor %}
+{% endfor %}

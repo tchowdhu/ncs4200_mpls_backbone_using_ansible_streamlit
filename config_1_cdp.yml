@@ -1,0 +1,17 @@
+---
+    - name: NCS4200 MPLS BACKBONE CREATION
+      gather_facts: false
+      hosts: ncs4200
+      connection: network_cli
+      vars_files: 
+          - host_vars/interfaces.yml
+  
+      tasks:
+        - name: Creating cdp.txt with respected resources
+          template:
+            src: discovery_protocol/cdp.j2
+            dest: config_generated_from_template/cdp-{{ inventory_hostname }}.txt
+
+        - name: CONFIG CDP
+          ios_config:
+            src: templates/discovery_protocol/cdp.j2

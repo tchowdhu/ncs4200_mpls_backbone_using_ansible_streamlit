@@ -1,0 +1,27 @@
+esmc process
+network-clock hold-off {{ hold_off_time_msec }} global
+network-clock synchronization automatic
+network-clock synchronization ssm option 2 GEN2
+network-clock synchronization mode QL-enabled
+network-clock wait-to-restore {{ wait_to_restore_time_sec }} global
+network-clock log ql-changes
+
+{% for keys, clock_sources in input_sources[inventory_hostname].items() %}
+{% for srcs in clock_sources %}
+{% if srcs.source_type=="Interface" %}
+{{ srcs.source_type }} {{ srcs.source_name }} {{ srcs.source_port }}
+	synchronous mode
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for keys, clock_sources in input_sources[inventory_hostname].items() %}
+{% for srcs in clock_sources %}
+{% if srcs.source_type=="External" %}
+network-clock input-source {{ srcs.priority }} {{ srcs.source_type }} {{ srcs.source_name }} t1 esf linecode b8zs line-build-out 0-133ft
+{% endif %}
+{% if (srcs.source_type=="Interface") and (srcs.priority>0) %}
+network-clock input-source {{ srcs.priority }} interface {{ srcs.source_name }} {{ srcs.source_port }}
+{% endif %}
+{% endfor %}
+{% endfor %}

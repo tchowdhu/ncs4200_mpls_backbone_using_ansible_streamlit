@@ -1,0 +1,23 @@
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+router ospf {{ ospf[inventory_hostname].ospf_id }}
+	log-adjacency-changes detail
+	nsf cisco
+{% for intfs in vals %}
+{% if intfs.interface_type=="softwareLoopback" %}
+	router-id {{intfs.ip_address}}
+	passive-interface {{intfs.interface_name}}{{intfs.interface_port}}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for interfaces, vals in nodes[inventory_hostname].items() %}
+{% for intfs in vals %}
+interface {{ intfs.interface_name }} {{ intfs.interface_port }}
+	ip ospf {{ ospf[inventory_hostname].ospf_id }} area {{ ospf[inventory_hostname].ospf_area }}
+{% if intfs.interface_type=="ethernetCsmacd" %}
+	ip ospf network point-to-point
+{% endif %}
+	logging event link-status
+	snmp trap link-status
+{% endfor %}
+{% endfor %}

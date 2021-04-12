@@ -1,0 +1,17 @@
+---
+    - name: NCS4200 MPLS BACKBONE CREATION
+      gather_facts: false
+      hosts: ncs4200
+      connection: network_cli
+      vars_files: 
+          - host_vars/interfaces.yml
+  
+      tasks:
+        - name: Creating rsvp-percentage.txt with respected resources
+          template:
+            src: rsvp_protocol/rsvp-percentage.j2
+            dest: config_generated_from_template/rsvp-percentage-{{ inventory_hostname }}.txt
+          
+        - name: CONFIGURE RSVP UNDER INTERFACES
+          ios_config:
+            src:  templates/rsvp_protocol/rsvp-percentage.j2
