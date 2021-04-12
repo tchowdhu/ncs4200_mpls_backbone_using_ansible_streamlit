@@ -98,9 +98,9 @@ This project has been tested on mac and ubuntu)
 2. Open terminal.
 3. open .env file and give proper values for the enviroment variables below:
     
-    ***export PYTHONENV=<~python3-environment-path>
-    ***export NCSUSER=<ncs4200_super_username>
-    ***export NCSPASS=<ncs4200_supoer_password>
+    - ***export PYTHONENV=<~python3-environment-path>***
+    - ***export NCSUSER=<ncs4200_super_username>***
+    - ***export NCSPASS=<ncs4200_supoer_password>***
     
 4. run "source .env"
 5. run "streamlit run ncs4200_mpls_backbone_using_ansible_streamlit.py"
