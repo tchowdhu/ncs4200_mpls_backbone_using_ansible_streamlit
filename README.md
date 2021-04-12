@@ -4,58 +4,116 @@
 
 ---
 
-**ToDo's:**
-
-- [ ] Consider writing your README first.  Doing so helps you clarify your intent, focuses your project, and it is much more fun to write documentation at the beginning of a project than at the end of one, see:
-    - [Readme Driven Development](http://tom.preston-werner.com/2010/08/23/readme-driven-development.html)
-    - [GitHub Guides: Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
-- [ ] Ensure you put the [license and copyright header](./HEADER) at the top of all your source code files.
-- [ ] Be mindful of the third-party materials you use and ensure you follow Cisco's policies for creating and sharing Cisco Sample Code.
-
----
-
 ## Motivation
 
-Include a short description of the motivation behind the creation and maintenance of the project.  Explain **why** the project exists.
-
-## Show Me!
-
-What visual, if shown, clearly articulates the impact of what you have created?  In as concise a visualization as possible (code sample, CLI output, animated GIF, or screenshot) show what your project makes possible.
-
-## Features
-
-Include a succinct summary of the features/capabilities of your project.
-
-- Feature 1
-- Feature 2
-- Feature 3
+This projects gives an example of automating configuring all required mpls backbone settings for cisco NCS4200 platform, to put it upto a point where it is ready provisioning MPLS/FLEX-LSP tunnels and CEM services. 
 
 ## Technologies & Frameworks Used
 
-This is Cisco Sample Code!  What Cisco and third-party technologies are you working with?  Are you using a coding framework or software stack?  A simple list will set the context for your project.
-
 **Cisco Products & Services:**
 
-- Product
-- Service
+- NCS4200
+- TDM2IP
 
-**Third-Party Products & Services:**
+** The project has been developed with the combination of **
 
-- Product
-- Service
+- ANSIBLE 
+- shell script 
+- python script.
 
-**Tools & Frameworks:**
+##### The ANSIBLE portion provides all the required playbooks for configuration task. These include playbooks for:
 
-- Framework 1
-- Automation Tool 2
+1. discovery protocol: CDP/ LLDP
+2. IP Address: Interface and Loopback
+3. IGP: OSPF/ ISIS
+4. MPLS TE
+5. MPLS LDP
+6. RSVP
+7. Network-clock synchronization: SyncE/ PTP
 
-## Usage
+##### The shell script provides:
 
-If people like your project, they will want to use it.  Show them how.
+1. Starting point for playing the playbooks.
+2. Additional ansible variable required while playing playbooks.
+
+##### The python script provides:
+
+1. The main starting point for the project. 
+2. Streamlit framwork for running the project through webGUI
+3. Shell script that call ansible playbooks, is run through this python script using various options developed for the webGUI app.
+
+## Features
+
+1. The project is basically a combination of 4 different mpls backbone environments. 
+
+    - MPLS backbone creation with OSPF and SyncE
+    - MPLS backbone creation with OSPF and PTP
+    - MPLS backbone creation with ISIS and SyncE
+    - MPLS backbone creation with ISIS and PTP
+
+ All the other configuration task stated above remains same.
+
+2. For each different enviroment, the input parameters ie. ip address, mask, interface name, igp id, loopback id, etc. should be provided from an Excel (.xlsx) file.
+
+3. Excel templates for 4 enviroments can be downloaded prior to configuring the NCS4200 devices.
+
+4. On choosing the right environment and right excel with data, it creates all required hosts inventory file and host variable files (.yml) which are necessary for running ansbile playbooks.
+
+5. Then there are options available to choose specific task (ie. ansible playbook) for confuring NCS4200 devices. The configurations are saved in jinja2 template format, real configuration which are pushed to the NCS4200 devices are created using these templates based on the host variable (.yml) files. 
+
+6. On successful run of all the selected task (when and only when the progress status is 100%), there will be an option to export all configurations that were pushed to NCS4200. This will be a zip file containing seperate .txt files for each configuration playbook and each host (NCS4200) device.
+
+7. On choosing wrong environment selection that is not compatible with the provided excel file, the project shows error and points out what should be the correct columns of the excel file for that particular option.
+
+**N.B.: This is a simple standalone WebGUI app for configuring NCS4200 box. It does not keep device configurions in any database.
+
+## Pre-requisites:
+
+1. NCS4200 devices should have basic init configs like management IP address, a common super credential (priviledge 15) for development works.
+2. ssh enabled
+3. Make sure, the devices are accessible in the network from your development enviroment.
 
 ## Installation
 
-Provide a step-by-step series of examples and explanations for how to install your project and its dependencies.
+(** Optional: Follow the steps from any of the link based on your OS to prepare your development enviroment.
+    - https://developer.cisco.com/learning/lab/containers-dev-win/step/1
+    - https://developer.cisco.com/learning/lab/containers-dev-mac/step/1
+    - https://developer.cisco.com/learning/lab/containers-dev-ubuntu/step/1
+
+This project has been tested on mac and ubuntu)
+
+
+1. Open terminal
+2. Clone the repository 
+3. Go to the project directory
+4. Assuming you have proper development enviroment, from terminal run "pip install -r requirements.txt".
+
+
+## Usage
+
+##### One time steps:
+
+1. Go to the project directory.
+2. Open terminal.
+3. open .env file and give proper values for the enviroment variables below:
+    
+    ***export PYTHONENV=<~python3-environment-path>
+    ***export NCSUSER=<ncs4200_super_username>
+    ***export NCSPASS=<ncs4200_supoer_password>
+    
+4. run "source .env"
+5. run "streamlit run ncs4200_mpls_backbone_using_ansible_streamlit.py"
+6. Open browser and goto "http://localhost:8501". in a remote server enviroment this can changed based on ip address and port number. 
+    http://<server-ip-address>:<port>
+
+##### Configuration steps (continous):
+
+7. Select Config variation from 4 different environment options
+8. Upload appropriate data excel file.
+9. Select tasks from selection box
+10. Apply config
+11. If error occurs check your environment or data input. 
+Follow these steps (7-11) for configuring various networks as required.
 
 ## Authors & Maintainers
 
@@ -66,6 +124,11 @@ Smart people responsible for the creation and maintenance of this project:
 ## Credits
 
 Give proper credit.  Inspired by another project or article?  Was your work made easier by a tutorial?  Include links to the people, projects, and resources that were influential in the creation of this project.
+
+1. https://streamlit.io/
+2. https://www.youtube.com/watch?v=_9WiB2PDO7k
+3. https://developer.cisco.com/automation-ansible/
+4. https://blogs.cisco.com/developer/automating-network-operations-3?dtid=osscdc000283
 
 ## License
 
