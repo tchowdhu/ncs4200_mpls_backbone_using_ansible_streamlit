@@ -39,7 +39,7 @@ This projects gives an example of automating configuration of all required mpls 
 #### The python script provides:
 
 1. The main starting point for the project. 
-2. Streamlit framwork for running the project through webGUI
+2. Streamlit framework for running the project through webGUI
 3. Shell script that call ansible playbooks, is run through this python script using various options selected from the webGUI app.
 
 ## Features
