@@ -94,8 +94,10 @@ This project has been tested on mac and ubuntu)
 
 #### One time steps:
 
-1. Go to the project directory.
-2. Open terminal.
+1. Open terminal.
+2. Go to the project directory.
+![alt text](images_steps/steps_1_2.png)
+
 3. open .env file and give proper values for the enviroment variables below:
     
     - ***export PYTHONENV=<~python3-environment-path>***
