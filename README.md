@@ -104,18 +104,53 @@ This project has been tested on mac and ubuntu)
     - ***export PYTHONENV=<~python3-environment-path>***
     - ***export NCSUSER=<ncs4200_super_username>***
     - ***export NCSPASS=<ncs4200_supoer_password>***
+
+![alt text](images_steps/step_3.png)
     
 4. run "source .env"
+
+![alt text](images_steps/step_4.png)
+
 5. run "streamlit run ncs4200_mpls_backbone_using_ansible_streamlit.py"
+
+![alt text](images_steps/step_5.png)
+
 6. Open browser and goto "http://localhost:8501". In a remote server enviroment this can be changed based on ip address and port number. 
     http://server-ip-address:port
+
+![alt text](images_steps/step_6.png)
+
 
 #### Configuration steps (continous):
 
 7. Select Config variation from the 4 different environment options
+
+![alt text](images_steps/step_7.png)
+
 8. Upload appropriate data excel file.
+
+![alt text](images_steps/step_8_1.png)
+
+This steps generates inventory and host variable files (.yml)
+
+![alt text](images_steps/step_8_2.png)
+
+![alt text](images_steps/step_8_3.png)
+
+![alt text](images_steps/step_8_4.png)
+
 9. Select tasks from selection box
+
+![alt text](images_steps/step_9_1.png)
+
+![alt text](images_steps/step_9_2.png)
+
 10. Apply config
+
+![alt text](images_steps/step_10_1.png)
+
+![alt text](images_steps/step_10_2.png)
+
 11. If error occurs check your environment and/or data input. 
 Follow these steps (7-11) for configuring various networks as required.
 
