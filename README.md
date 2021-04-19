@@ -131,7 +131,7 @@ This project has been tested on mac and ubuntu)
 
 ![alt text](images_steps/step_8_1.png)
 
-This steps generates inventory and host variable files (.yml)
+This step generates inventory and host variable files (.yml)
 
 ![alt text](images_steps/step_8_2.png)
 
