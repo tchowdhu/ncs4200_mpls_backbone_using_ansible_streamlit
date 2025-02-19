@@ -40,9 +40,10 @@ import pandas as pd
 import time
 import zipfile
 import base64
-
+from dotenv import load_dotenv
 from utils.hosts_vars_generate import *
 
+load_dotenv()
 
 #index encoding of the list below
 OSPF_AND_SYNCE = 0
